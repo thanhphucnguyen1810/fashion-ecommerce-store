@@ -6,6 +6,9 @@ export default {
         Jost: ['Jost', 'sans-serif'],
         Lobster: ['Lobster', 'cursive'],
         Poppins: ['Poppins', 'sans-serif']
+      },
+      colors: {
+        'rabbit-red': '#EA2E0E'
       }
     }
   },
