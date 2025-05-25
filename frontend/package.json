@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "author": "thanhphucnguyen",
+  "author": "thanh-phuc-nguyen",
   "description": "E-commerce",
   "engines": {
     "node": ">=18.x"
@@ -16,6 +16,9 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.0",
     "@tailwindcss/vite": "^4.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
