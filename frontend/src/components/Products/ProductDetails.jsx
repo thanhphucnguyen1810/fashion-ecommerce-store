@@ -155,7 +155,7 @@ const ProductDetails = () => {
             <p className='text-lg line-through mb-1'
               style={{ color: theme.palette.text.secondary }}
             >
-              {selectedProduct.originalPrice && `${selectedProduct.originalPrice}`}
+              {selectedProduct.originalPrice && `$${selectedProduct.originalPrice}`}
             </p>
             <p className='text-xl mb-2'
               style={{ color: theme.palette.text.primary }}
