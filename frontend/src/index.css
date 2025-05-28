@@ -3,7 +3,9 @@
 @config "../tailwind.config.js";
 
 #root {
-  font-family: "font-Poppins", sans-serif;
+  font-family: "font-Poppins", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
   font-style: normal;
 }

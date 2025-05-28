@@ -33,16 +33,17 @@ const cartProducts = [
 
 const CartContents = () => {
   const theme = useTheme()
-  const isDark = theme.palette.mode === 'dark'
 
   return (
-    <div className={`p-4 rounded-xl shadow-md ${isDark ? 'bg-slate-800' : 'bg-white'} w-full max-w-3xl mx-auto`}>
+    <div
+      className="p-4 rounded-xl shadow-md w-full max-w-3xl mx-auto"
+      style={{ backgroundColor: theme.palette.background.paper }}
+    >
       {cartProducts.map((product, index) => (
         <div
           key={index}
-          className={`flex items-center justify-between py-4 border-b last:border-none ${
-            isDark ? 'border-slate-700' : 'border-gray-200'
-          }`}
+          className="flex items-center justify-between py-4 border-b last:border-none"
+          style={{ borderColor: theme.palette.divider }}
         >
           {/* Left */}
           <div className="flex items-start">
@@ -52,23 +53,46 @@ const CartContents = () => {
               className="w-20 h-24 object-cover mr-4 rounded-xl shadow-sm"
             />
             <div>
-              <h3 className={`text-base font-semibold ${isDark ? 'text-white' : 'text-[#042956]'}`}>
+              <h3
+                className="text-base font-semibold"
+                style={{ color: theme.palette.text.primary }}
+              >
                 {product.name}
               </h3>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>
+              <p className="text-xs" style={{ color: theme.palette.text.secondary }}>
                 Size:{' '}
-                <span className="font-medium text-[#0F4C81]">{product.size}</span><br />
+                <span style={{ color: theme.palette.primary.main, fontWeight: 500 }}>
+                  {product.size}
+                </span>
+                <br />
                 Color:{' '}
-                <span className="font-medium text-[#236899]">{product.color}</span>
+                <span style={{ color: theme.palette.secondary.main, fontWeight: 500 }}>
+                  {product.color}
+                </span>
               </p>
               <div className="flex items-center mt-2 space-x-2">
-                <button className="w-7 h-7 flex items-center justify-center border border-gray-300 dark:border-slate-600 rounded-full text-[#0F4C81] text-sm font-bold hover:bg-[#0F4C81] hover:text-white transition">
+                <button
+                  className="w-7 h-7 flex items-center justify-center border rounded-full text-sm font-bold transition"
+                  style={{
+                    borderColor: theme.palette.divider,
+                    color: theme.palette.primary.main
+                  }}
+                >
                   −
                 </button>
-                <span className={`${isDark ? 'text-white' : 'text-[#042956]'} text-sm font-semibold`}>
+                <span
+                  className="text-sm font-semibold"
+                  style={{ color: theme.palette.text.primary }}
+                >
                   {product.quantity}
                 </span>
-                <button className="w-7 h-7 flex items-center justify-center border border-gray-300 dark:border-slate-600 rounded-full text-[#0F4C81] text-sm font-bold hover:bg-[#0F4C81] hover:text-white transition">
+                <button
+                  className="w-7 h-7 flex items-center justify-center border rounded-full text-sm font-bold transition"
+                  style={{
+                    borderColor: theme.palette.divider,
+                    color: theme.palette.primary.main
+                  }}
+                >
                   +
                 </button>
               </div>
@@ -77,11 +101,14 @@ const CartContents = () => {
 
           {/* Right */}
           <div className="text-right">
-            <p className={`text-sm font-semibold mb-2 ${isDark ? 'text-white' : 'text-[#042956]'}`}>
+            <p
+              className="text-sm font-semibold mb-2"
+              style={{ color: theme.palette.text.primary }}
+            >
               ${product.price.toFixed(2)}
             </p>
-            <button className="hover:text-red-700 transition" title="Remove item">
-              <FiTrash2 className="h-5 w-5 text-red-600 hover:scale-110 transition-transform" />
+            <button title="Remove item" style={{ color: theme.palette.error.main }}>
+              <FiTrash2 className="h-5 w-5 hover:scale-110 transition-transform" />
             </button>
           </div>
         </div>

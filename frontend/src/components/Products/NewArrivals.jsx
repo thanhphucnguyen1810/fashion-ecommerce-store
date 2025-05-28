@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
-import palette from '~/theme/palette' // đảm bảo đường dẫn đúng
+import palette from '~/theme/palette'
 
 const NewArrivals = () => {
   const theme = useTheme()
-  const mode = theme.palette.mode // "light" hoặc "dark"
+  const mode = theme.palette.mode
   const colors = palette[mode]
 
   const newArrivals = [

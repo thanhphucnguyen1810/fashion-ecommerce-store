@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import '~/index.css'
 import UserLayout from '~/components/Layouts/UserLayout'
 import SettingsProvider from '~/contexts/SettingsContext'
@@ -8,6 +9,7 @@ function App() {
   return (
     <SettingsProvider>
       <BrowserRouter>
+        <Toaster position='top-right' />
         <Routes>
           {/* User Layout */}
           <Route path='/' element={<UserLayout />}>

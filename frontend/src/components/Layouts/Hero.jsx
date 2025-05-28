@@ -4,16 +4,12 @@ import heroImg from '~/assets/rabbit-hero.webp'
 
 const Hero = () => {
   const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
 
-  const overlayColor = theme.palette.mode === 'dark'
-    ? 'bg-black/60'
-    : 'bg-white/30'
-
-  const textColor = theme.palette.mode === 'dark'
-    ? 'text-white'
-    : 'text-[#042956]'
-
-  const buttonClass = theme.palette.mode === 'dark'
+  // Các biến màu/tạo class
+  const overlayColor = isDark ? 'bg-black/60' : 'bg-white/30'
+  const textColor = isDark ? 'text-white' : 'text-[#042956]'
+  const buttonClass = isDark
     ? 'bg-white text-gray-900'
     : 'bg-[#042956] text-white'
 

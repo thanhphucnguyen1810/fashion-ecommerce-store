@@ -1,9 +1,11 @@
 import Topbar from '~/components/Layouts/Topbar'
 import Navbar from './Navbar'
+import { useTheme } from '@mui/material/styles'
 
 const Header = () => {
+  const theme = useTheme()
   return (
-    <header className='border-b border-gray-200'>
+    <header style={{ borderBottom: `1px solid ${theme.palette.divider}` }}>
       {/* Topbar */}
       <Topbar />
       {/* navbar */}
