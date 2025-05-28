@@ -20,6 +20,10 @@ const SearchBar = () => {
     setIsOpen(false)
   }
 
+  const primary = theme.palette.primary.main
+  const primaryDark = theme.palette.primary.dark
+  const ringColor = isDark ? 'focus:ring-blue-400' : 'focus:ring-[#0F4C81]'
+
   return (
     <div
       className={`transition-all duration-300 ${
@@ -44,16 +48,17 @@ const SearchBar = () => {
             className={`w-full py-3 px-5 pr-12 rounded-full shadow-inner focus:outline-none focus:ring-2 ${
               isDark
                 ? 'bg-slate-800 text-slate-100 placeholder:text-slate-400 focus:ring-blue-400'
-                : 'bg-gray-100 text-[#042956] placeholder:text-gray-600 focus:ring-[#0F4C81]'
+                : `bg-gray-100 text-[${primaryDark}] placeholder:text-gray-600 ${ringColor}`
             }`}
           />
 
           {/* Search icon */}
           <button
             type="submit"
-            className={`absolute right-12 top-1/2 transform -translate-y-1/2 transition ${
-              isDark ? 'text-blue-400 hover:text-white' : 'text-[#0F4C81] hover:text-[#042956]'
-            }`}
+            className="absolute right-12 top-1/2 transform -translate-y-1/2 transition"
+            style={{
+              color: isDark ? theme.palette.info.light : primary
+            }}
             title="Search"
           >
             <HiMagnifyingGlass className="w-6 h-6" />
@@ -63,9 +68,20 @@ const SearchBar = () => {
           <button
             type="button"
             onClick={handleSearchToggle}
-            className={`absolute right-2 top-1/2 transform -translate-y-1/2 transition ${
-              isDark ? 'text-slate-400 hover:text-red-400' : 'text-gray-500 hover:text-red-600'
-            }`}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 transition"
+            style={{
+              color: isDark ? theme.palette.grey[400] : theme.palette.grey[600]
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = isDark
+                ? theme.palette.error.light
+                : theme.palette.error.main
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = isDark
+                ? theme.palette.grey[400]
+                : theme.palette.grey[600]
+            }}
             title="Close"
           >
             <HiMiniXMark className="w-6 h-6" />
@@ -74,9 +90,11 @@ const SearchBar = () => {
       ) : (
         <button
           onClick={handleSearchToggle}
-          className={`transition ${
-            isDark ? 'text-blue-300 hover:text-white' : 'text-[#0F4C81] hover:text-[#042956]'
-          }`}
+          className="transition"
+          style={{
+            color: isDark ? theme.palette.info.light : primary
+          }}
+          title="Search"
         >
           <HiMagnifyingGlass className="h-6 w-6" />
         </button>

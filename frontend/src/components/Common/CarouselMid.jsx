@@ -22,8 +22,7 @@ const CarouselMid = () => {
     return () => clearInterval(interval)
   }, [])
 
-  const isLight = theme.palette.mode === 'light'
-  const textColor = isLight ? '#ccc' : '#fff'
+  const textColor = theme.palette.text.secondary
 
   return (
     <div className="col-span-12 sm:col-span-6 lg:col-span-4 text-center">

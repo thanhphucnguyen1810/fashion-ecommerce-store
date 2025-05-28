@@ -7,8 +7,9 @@ import CarouselMid from '~/components/Common/CarouselMid'
 
 const Topbar = () => {
   const theme = useTheme()
+  const isLight = theme.palette.mode === 'light'
 
-  const iconClass = theme.palette.mode === 'light' ? 'text-[#b8b9c2]' : 'text-[#94a3b8]'
+  const iconClass = isLight ? 'text-[#b8b9c2]' : 'text-[#94a3b8]'
 
   return (
     <div className="bg-[#042956] text-[#b8b9c2] text-sm">
