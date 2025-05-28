@@ -6,12 +6,20 @@ const Hero = () => {
   const theme = useTheme()
   const isDark = theme.palette.mode === 'dark'
 
-  // Các biến màu/tạo class
-  const overlayColor = isDark ? 'bg-black/60' : 'bg-white/30'
-  const textColor = isDark ? 'text-white' : 'text-[#042956]'
-  const buttonClass = isDark
-    ? 'bg-white text-gray-900'
-    : 'bg-[#042956] text-white'
+  const overlayStyle = {
+    backgroundColor: isDark
+      ? 'rgba(0, 0, 0, 0.6)'
+      : 'rgba(255, 255, 255, 0.3)'
+  }
+
+  const textColor = {
+    color: isDark ? theme.palette.common.white : theme.palette.text.primary
+  }
+
+  const buttonStyle = {
+    backgroundColor: isDark ? theme.palette.common.white : theme.palette.primary.main,
+    color: isDark ? theme.palette.grey[900] : theme.palette.common.white
+  }
 
   return (
     <section className="relative">
@@ -20,8 +28,11 @@ const Hero = () => {
         alt="Rabbit"
         className="w-full h-[400px] md:h-[600px] lg:h-[750px] object-cover object-center"
       />
-      <div className={`absolute inset-0 ${overlayColor} flex items-center justify-center`}>
-        <div className={`text-center p-6 ${textColor}`}>
+      <div
+        className="absolute inset-0 flex items-center justify-center"
+        style={overlayStyle}
+      >
+        <div className="text-center p-6" style={textColor}>
           <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight uppercase mb-4 drop-shadow-lg">
             Vacation <br /> Ready
           </h1>
@@ -30,7 +41,8 @@ const Hero = () => {
           </p>
           <Link
             to="#"
-            className={`inline-block ${buttonClass} px-6 py-3 rounded-md text-lg font-semibold shadow-lg hover:opacity-90 transition`}
+            className="inline-block px-6 py-3 rounded-md text-lg font-semibold shadow-lg hover:opacity-90 transition"
+            style={buttonStyle}
           >
             Shop Now
           </Link>
