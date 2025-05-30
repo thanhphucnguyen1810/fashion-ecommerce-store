@@ -12,6 +12,7 @@ import SearchBar from './SearchBar'
 import CartDrawer from '~/components/Layouts/CartDrawer'
 import MobileDrawer from '~/components/Common/MobileDrawer'
 import useSettings from '~/hooks/useSettings'
+import DesktopNav from './DesktopNav'
 
 const Navbar = () => {
 
@@ -25,12 +26,11 @@ const Navbar = () => {
   const toggleNavDrawer = () => setNavDrawerOpen(!navDrawerOpen)
 
   const primaryColor = theme.palette.primary.main
-  const secondaryColor = theme.palette.primary.dark
 
   return (
     <>
       <nav className="container mx-auto flex items-center justify-between py-4 px-6 relative z-40">
-        {/* Logo */}
+        {/* Left - Logo */}
         <Link
           to="/"
           className="text-2xl font-bold font-Lobster tracking-wide"
@@ -40,24 +40,8 @@ const Navbar = () => {
         </Link>
 
         {/* Nav Links - Desktop */}
-        <div className="hidden md:flex space-x-6">
-          {['Men', 'Women', 'Top Wear', 'Bottom Wear'].map((label) => (
-            <Link
-              key={label}
-              to="#"
-              className="text-sm font-Poppins uppercase transition"
-              style={{ color: primaryColor }}
-              onMouseEnter={(e) => {
-                e.target.style.color = secondaryColor
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = primaryColor
-              }}
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
+        <DesktopNav />
+
 
         {/* Right - Icons & Search */}
         <div className="flex items-center space-x-4">

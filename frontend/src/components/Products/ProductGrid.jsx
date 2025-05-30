@@ -5,9 +5,9 @@ const ProductGrid = ({ products }) => {
   const theme = useTheme()
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
-      {products.map((product, index) => (
+      {products.map((product) => (
         <Link
-          key={index}
+          key={product._id}
           to={`/product/${product._id}`}
           className='block'
           style={{
