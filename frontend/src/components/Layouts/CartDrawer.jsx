@@ -1,6 +1,7 @@
 import { IoMdClose } from 'react-icons/io'
 import { useTheme } from '@mui/material/styles'
 import CartContents from '~/components/Cart/CartContents'
+import { useNavigate } from 'react-router-dom'
 
 const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
   const theme = useTheme()
@@ -13,6 +14,13 @@ const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
   const btnBg = theme.palette.primary.main
   const btnHover = theme.palette.primary.dark
   const secondaryText = isDark ? 'text-gray-400' : 'text-gray-500'
+
+  const navigate = useNavigate()
+
+  const handleCheckout = () => {
+    toggleCartDrawer()
+    navigate('/checkout')
+  }
 
   return (
     <div
@@ -56,8 +64,9 @@ const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
           }}
           onMouseEnter={(e) => (e.target.style.backgroundColor = btnHover)}
           onMouseLeave={(e) => (e.target.style.backgroundColor = btnBg)}
+          onClick={handleCheckout}
         >
-          Proceed to Checkout
+          Checkout
         </button>
         <p className={`text-xs text-center mt-3 ${secondaryText}`}>
           Shipping, taxes, and discount codes calculated at checkout.
