@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom'
 
 const MyOrdersPage = () => {
   const theme = useTheme()
   const [orders, setOrders] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,6 +38,10 @@ const MyOrdersPage = () => {
       setOrders(mockOrders)
     }, 1000)
   }, [])
+
+  const handleRowClick = (orderId) => {
+    navigate(`/order/${orderId}`)
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
@@ -77,6 +83,7 @@ const MyOrdersPage = () => {
               orders.map((order) => (
                 <tr
                   key={order._id}
+                  onClick={() => handleRowClick(order._id)}
                   className="border-b hover:bg-gray-50"
                   style={{
                     borderColor: theme.palette.divider,
