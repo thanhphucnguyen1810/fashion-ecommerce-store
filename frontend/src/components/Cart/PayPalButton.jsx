@@ -3,7 +3,7 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 const PayPalButton = ({ amount, onSuccess, onError }) => {
   return (
     <PayPalScriptProvider
-      options={{ 'client-id':'AegOcLD4rdylek0_4UChAWdQYdA199x9KPbwbGdHh3zPx7-dTUMxuVuEEtaY1h8yewqO1iGGdxJfYpXw' }}
+      options={{ 'client-id': import.meta.env.VITE_PAYPAL_CLIENT_ID }}
     >
       <PayPalButtons
         style={{ layout: 'vertical' }}
