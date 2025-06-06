@@ -58,6 +58,15 @@ const Navbar = () => {
             )}
           </button>
 
+          <button className="text-xl p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-400 transition">
+            <Link
+              to='/admin'
+              className='block bg-gray-500 px-2 rounded text-sm text-white'
+            >
+              Admin
+            </Link>
+          </button>
+
           {/* Profile */}
           <button className="text-xl p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-400 transition">
             <Link to="/profile" title="Profile">
