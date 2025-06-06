@@ -12,9 +12,11 @@ import CollectionPage from '~/pages/CollectionPage'
 import ProductDetails from '~/components/Products/ProductDetails'
 import Contact from '~/pages/Contact'
 import Checkout from '~/components/Cart/Checkout'
-import OrderConfirmationPage from './pages/OrderConfirmationPage'
-import OrderDetailsPage from './pages/OrderDetailsPage'
-import MyOrdersPage from './pages/MyOrdersPage'
+import OrderConfirmationPage from '~/pages/OrderConfirmationPage'
+import OrderDetailsPage from '~/pages/OrderDetailsPage'
+import MyOrdersPage from '~/pages/MyOrdersPage'
+import AdminLayout from '~/components/Admin/AdminLayout'
+import AdminHomePage from '~/pages/AdminHomePage'
 
 
 function App() {
@@ -43,7 +45,10 @@ function App() {
             <Route path='my-orders' element={<MyOrdersPage />} />
 
           </Route>
-          <Route>{/* Admin Layout */}</Route>
+          {/* Admin Layout */}
+          <Route path='/admin' element={<AdminLayout />}>
+            <Route index element={<AdminHomePage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </SettingsProvider>
