@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+
 import { useState } from 'react'
 
 const UserManagement = () => {
@@ -18,6 +18,12 @@ const UserManagement = () => {
     role: 'customer'
   })
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [roleFilter, setRoleFilter] = useState('')
+  const [message, setMessage] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const usersPerPage = 5
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -25,7 +31,15 @@ const UserManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
+    const newUser = {
+      _id: Date.now(), // fake ID
+      name: formData.name,
+      email: formData.email,
+      role: formData.role
+    }
+
+    setUsers(prev => [...prev, newUser])
+    setMessage('User added successfully!')
 
     // Reset form
     setFormData({
@@ -34,22 +48,43 @@ const UserManagement = () => {
       password: '',
       role: 'customer'
     })
+
+    // Reset message after 3 seconds
+    setTimeout(() => setMessage(''), 3000)
   }
 
   const handleRoleChange = (userId, newRole) => {
-    console.log({ id: userId, role: newRole })
     const updatedUsers = users.map(user =>
       user._id === userId ? { ...user, role: newRole } : user
     )
     setUsers(updatedUsers)
+    setMessage('User role updated!')
+    setTimeout(() => setMessage(''), 2000)
   }
 
   const handleDeleteUser = (userId) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this user?')
     if (confirmDelete) {
-      console.log('Deleting user with ID', userId)
+      const updatedUsers = users.filter(user => user._id !== userId)
+      setUsers(updatedUsers)
+      setMessage('User deleted!')
+      setTimeout(() => setMessage(''), 2000)
     }
   }
+
+  // Filtering
+  const filteredUsers = users.filter(user =>
+    (user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())) &&
+    (roleFilter === '' || user.role === roleFilter)
+  )
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage)
+  const currentUsers = filteredUsers.slice(
+    (currentPage - 1) * usersPerPage,
+    currentPage * usersPerPage
+  )
 
   const inputClass = 'w-full p-2 border rounded'
   const labelClass = 'block text-gray-700 mb-1'
@@ -57,6 +92,34 @@ const UserManagement = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">User Management</h2>
+
+      {/* Status message */}
+      {message && (
+        <div className="mb-4 p-2 bg-green-100 text-green-700 border border-green-400 rounded">
+          {message}
+        </div>
+      )}
+
+      {/* Search & Filter */}
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Search by name or email..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border rounded w-full md:w-1/2"
+        />
+
+        <select
+          value={roleFilter}
+          onChange={(e) => setRoleFilter(e.target.value)}
+          className="p-2 border rounded w-full md:w-1/3"
+        >
+          <option value="">All Roles</option>
+          <option value="admin">Admin</option>
+          <option value="customer">Customer</option>
+        </select>
+      </div>
 
       {/* Add New User Form */}
       <section className="p-6 rounded-lg border mb-8 bg-white">
@@ -132,7 +195,7 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {currentUsers.map((user) => (
               <tr key={user._id} className="border-b hover:bg-gray-50">
                 <td className="p-4 font-medium text-gray-900 whitespace-nowrap">{user.name}</td>
                 <td className="p-4">{user.email}</td>
@@ -159,6 +222,27 @@ const UserManagement = () => {
           </tbody>
         </table>
       </section>
+
+      {/* Pagination */}
+      <div className="mt-4 flex items-center justify-between">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(prev => prev - 1)}
+          className="px-3 py-1 border rounded bg-gray-100 disabled:opacity-50"
+        >
+          Prev
+        </button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(prev => prev + 1)}
+          className="px-3 py-1 border rounded bg-gray-100 disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
     </div>
   )
 }
