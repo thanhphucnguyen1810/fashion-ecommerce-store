@@ -1,30 +1,106 @@
 /* eslint-disable no-console */
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const ProductManagement = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    price: '',
+    sku: ''
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // TODO: Send request to backend to add new product
+    console.log('Submitting new product:', formData)
+    setFormData({ name: '', price: '', sku: '' })
+  }
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this product?')
+    if (confirmDelete) {
+      // TODO: Send request to backend to delete product by ID
+      console.log('Deleting product with ID:', id)
+    }
+  }
+
   const products = [
     {
-      _id: 12345,
+      _id: 1,
       name: 'Shift',
       price: 110,
       sku: '123456789'
+    },
+    {
+      _id: 2,
+      name: 'Apple',
+      price: 80,
+      sku: '987654321'
     }
+    // TODO: Product data should come from backend
   ]
-
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete the product?')
-    if (confirmDelete) {
-      console.log('Delete product with id:', id)
-    }
-  }
 
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Product Management</h2>
 
-      <div className="overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="min-w-full text-left text-gray-500">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
+      {/* Add New Product Form */}
+      <div className="bg-white border p-6 mb-8 rounded-lg shadow-sm">
+        <h3 className="text-lg font-semibold mb-4">Add New Product</h3>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block mb-1 font-medium">Product Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">Price</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-medium">SKU</label>
+            <input
+              type="text"
+              name="sku"
+              value={formData.sku}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div className="md:col-span-3">
+            <button
+              type="submit"
+              className="bg-green-500 text-white px-4 py-2 mt-2 rounded hover:bg-green-600"
+            >
+              Add Product
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Product Table */}
+      <div className="overflow-x-auto shadow-md sm:rounded-lg bg-white">
+        <table className="min-w-full text-left text-gray-700">
+          <thead className="bg-gray-100 text-xs uppercase">
             <tr>
               <th className="py-3 px-4">Name</th>
               <th className="py-3 px-4">Price</th>
@@ -35,25 +111,20 @@ const ProductManagement = () => {
           <tbody>
             {products.length > 0 ? (
               products.map((product) => (
-                <tr
-                  key={product._id}
-                  className="border-b hover:bg-gray-50 cursor-pointer"
-                >
-                  <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
-                    {product.name}
-                  </td>
+                <tr key={product._id} className="border-b hover:bg-gray-50">
+                  <td className="p-4 font-medium">{product.name}</td>
                   <td className="p-4">${product.price}</td>
                   <td className="p-4">{product.sku}</td>
                   <td className="p-4">
                     <Link
                       to={`/admin/products/${product._id}/edit`}
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
+                      className="bg-yellow-500 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-600"
                     >
                       Edit
                     </Link>
                     <button
                       onClick={() => handleDelete(product._id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                     >
                       Delete
                     </button>
@@ -75,3 +146,11 @@ const ProductManagement = () => {
 }
 
 export default ProductManagement
+
+
+/**
+Lấy danh sách sản phẩm	GET /api/products
+Thêm sản phẩm mới	POST /api/products
+Xoá sản phẩm	DELETE /api/products/:id
+Sửa sản phẩm	PUT /api/products/:id
+ */

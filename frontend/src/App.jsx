@@ -21,6 +21,12 @@ import AdminHomePage from '~/pages/AdminHomePage'
 import UserManagement from './components/Admin/UserManagement'
 import ProductManagement from './components/Admin/ProductManagement'
 import EditProductPage from './components/Admin/EditProductPage'
+import OrderManagement from './components/Admin/OrderManagement'
+// import AdminReviews from './components/Admin/AdminReviews'
+// import AdminDiscountCodes from './components/Admin/AdminDiscountCodes'
+// import StockManagement from './components/Admin/StockManagement'
+// import SystemSettings from './components/Admin/SystemSettings'
+// import Notifications from './components/Admin/Notifications'
 
 
 function App() {
@@ -55,6 +61,12 @@ function App() {
             <Route path='users' element={<UserManagement />} />
             <Route path='products' element={<ProductManagement />} />
             <Route path='products/:id/edit' element={<EditProductPage />} />
+            <Route path='orders' element={<OrderManagement />} />
+            {/* <Route path="reviews" element={<AdminReviews />} /> */}
+            {/* <Route path='coupons' element={<AdminDiscountCodes />} /> */}
+            {/* <Route path='stock' element={<StockManagement />} /> */}
+            {/* <Route path='settings' element={<SystemSettings />} /> */}
+            {/* <Route path="notifications" element={<Notifications />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

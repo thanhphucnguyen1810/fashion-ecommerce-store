@@ -3,7 +3,12 @@ import {
   FaClipboardList,
   FaSignOutAlt,
   FaStore,
-  FaUser
+  FaUser,
+  FaStar,
+  FaCog,
+  FaTags,
+  FaWarehouse,
+  FaBell
 } from 'react-icons/fa'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
@@ -11,9 +16,15 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 const menuItems = [
   { to: '/admin/users', label: 'Users', icon: <FaUser /> },
   { to: '/admin/products', label: 'Products', icon: <FaBoxOpen /> },
+  { to: '/admin/stock', label: 'Stock Manage', icon: <FaWarehouse /> },
   { to: '/admin/orders', label: 'Orders', icon: <FaClipboardList /> },
+  { to: '/admin/reviews', label: 'Reviews', icon: <FaStar /> },
+  { to: '/admin/coupons', label: 'Coupons', icon: <FaTags /> },
+  { to: '/admin/notifications', label: 'Notifications', icon: <FaBell /> },
+  { to: '/admin/settings', label: 'Settings', icon: <FaCog /> },
   { to: '/', label: 'Shop', icon: <FaStore /> }
 ]
+
 
 const AdminSidebar = () => {
   const navigate = useNavigate()
