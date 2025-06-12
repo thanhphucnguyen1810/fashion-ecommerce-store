@@ -26,7 +26,7 @@ import AdminDiscountCodes from './components/Admin/AdminDiscountCodes'
 import AdminReviews from './components/Admin/AdminReviews'
 import SystemSettings from './components/Admin/SystemSettings'
 import StockManagement from './components/Admin/StockManagement'
-// import Notifications from './components/Admin/Notifications'
+import Notifications from './components/Admin/Notifications'
 
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
             <Route path="reviews" element={<AdminReviews />} />
             <Route path='settings' element={<SystemSettings />} />
             <Route path='stock' element={<StockManagement />} />
-            {/* <Route path="notifications" element={<Notifications />} /> */}
+            <Route path="notifications" element={<Notifications />} />
           </Route>
         </Routes>
       </BrowserRouter>

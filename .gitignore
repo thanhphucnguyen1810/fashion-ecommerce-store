@@ -120,6 +120,5 @@ client/src/components/twilio-video-starter-kit
 *.sw?
 
 # Others
-/frontend/src/components/Admin/Notifications.jsx
 
 
