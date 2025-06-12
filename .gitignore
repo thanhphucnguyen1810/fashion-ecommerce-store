@@ -122,5 +122,5 @@ client/src/components/twilio-video-starter-kit
 # Others
 /frontend/src/components/Admin/Notifications.jsx
 /frontend/src/components/Admin/StockManagement.jsx
-/frontend/src/components/Admin/SystemSettings.jsx
+
 
