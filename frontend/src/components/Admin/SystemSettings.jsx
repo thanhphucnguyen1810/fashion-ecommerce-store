@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { useTheme, alpha } from '@mui/material/styles'
 
 export default function SystemSettings() {
+  const theme = useTheme()
+
   const [logo, setLogo] = useState(null)
   const [shopName, setShopName] = useState('')
   const [systemEmail, setSystemEmail] = useState('')
@@ -21,7 +24,13 @@ export default function SystemSettings() {
   }
 
   return (
-    <div className="max-w-lg mx-auto mt-16 p-6 bg-white rounded-lg shadow-md">
+    <div
+      className="max-w-lg mx-auto mt-16 p-6 rounded-lg shadow-md"
+      style={{
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary
+      }}
+    >
       <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
         <span>⚙️</span> System Settings
       </h2>
@@ -31,7 +40,11 @@ export default function SystemSettings() {
         <div className="flex items-center gap-4">
           <label
             htmlFor="logoUpload"
-            className="cursor-pointer bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+            className="cursor-pointer px-4 py-2 rounded-md transition"
+            style={{
+              backgroundColor: theme.palette.success.main,
+              color: theme.palette.success.contrastText
+            }}
           >
             Upload Logo
           </label>
@@ -47,10 +60,20 @@ export default function SystemSettings() {
             <img
               src={logo}
               alt="Logo Preview"
-              className="w-20 h-20 object-contain rounded-md border border-gray-300"
+              className="w-20 h-20 object-contain rounded-md"
+              style={{
+                border: `1px solid ${alpha(theme.palette.divider, 0.6)}`
+              }}
             />
           ) : (
-            <div className="w-20 h-20 flex items-center justify-center bg-gray-100 rounded-md border border-gray-300 text-gray-400">
+            <div
+              className="w-20 h-20 flex items-center justify-center rounded-md"
+              style={{
+                backgroundColor: alpha(theme.palette.text.primary, 0.05),
+                border: `1px solid ${alpha(theme.palette.divider, 0.4)}`,
+                color: alpha(theme.palette.text.primary, 0.5)
+              }}
+            >
               No Logo
             </div>
           )}
@@ -67,7 +90,13 @@ export default function SystemSettings() {
             required
             value={shopName}
             onChange={(e) => setShopName(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2"
+            style={{
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.text.primary,
+              border: `1px solid ${alpha(theme.palette.divider, 0.4)}`,
+              outlineColor: theme.palette.success.main
+            }}
             placeholder="Enter your shop name"
           />
         </div>
@@ -83,14 +112,24 @@ export default function SystemSettings() {
             required
             value={systemEmail}
             onChange={(e) => setSystemEmail(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2"
+            style={{
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.text.primary,
+              border: `1px solid ${alpha(theme.palette.divider, 0.4)}`,
+              outlineColor: theme.palette.success.main
+            }}
             placeholder="Enter system email"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-green-600 text-white py-3 rounded-md text-lg font-semibold hover:bg-green-700 transition"
+          className="w-full py-3 rounded-md text-lg font-semibold transition"
+          style={{
+            backgroundColor: theme.palette.success.main,
+            color: theme.palette.success.contrastText
+          }}
         >
           Save Settings
         </button>

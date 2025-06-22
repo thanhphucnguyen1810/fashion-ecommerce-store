@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useTheme, alpha } from '@mui/material/styles'
 
 const notificationsData = [
   {
@@ -29,52 +30,36 @@ const notificationsData = [
 
 // Icon component for notification type
 function NotificationIcon({ type }) {
-  switch (type) {
-  case 'order':
-    return (
-      <svg
-        className="w-6 h-6 text-green-500"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h10M9 21h6"></path>
-      </svg>
-    )
-  case 'stock':
-    return (
-      <svg
-        className="w-6 h-6 text-yellow-500"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-    )
-  case 'user':
-    return (
-      <svg
-        className="w-6 h-6 text-blue-500"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A7.966 7.966 0 0112 15a7.966 7.966 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-      </svg>
-    )
-  default:
-    return null
+  const theme = useTheme()
+  const colorMap = {
+    order: theme.palette.success.main,
+    stock: theme.palette.warning.main,
+    user: theme.palette.info.main
   }
+
+  const iconPaths = {
+    order: 'M3 10h18M7 15h10M9 21h6',
+    stock: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    user: 'M5.121 17.804A7.966 7.966 0 0112 15a7.966 7.966 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z'
+  }
+
+  return (
+    <svg
+      className="w-6 h-6 flex-shrink-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      style={{ color: colorMap[type] || theme.palette.text.primary }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d={iconPaths[type]} />
+    </svg>
+  )
 }
 
 export default function Notifications() {
+  const theme = useTheme()
   const [notifications, setNotifications] = useState(notificationsData)
 
   // TODO: Ở đây có thể thêm useEffect gọi API backend lấy notifications thực tế
@@ -86,27 +71,59 @@ export default function Notifications() {
   // }, [])
 
   return (
-    <div className="max-w-xl mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
+    <div
+      className="max-w-xl mx-auto mt-12 p-6 rounded-lg shadow-md"
+      style={{
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary
+      }}
+    >
       <h2 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-        <span role="img" aria-label="bell">
-          🛎
-        </span>{' '}
-        Notifications
+        <span role="img" aria-label="bell">🛎</span> Notifications
       </h2>
 
       {notifications.length === 0 ? (
-        <p className="text-gray-500">No notifications.</p>
+        <p style={{ color: theme.palette.text.secondary }}>No notifications.</p>
       ) : (
-        <ul className="divide-y divide-gray-200">
-          {notifications.map(({ id, type, message, time }) => (
+        <ul>
+          {notifications.map(({ id, type, message, time }, index) => (
             <li
               key={id}
-              className="flex items-center gap-4 py-4 hover:bg-gray-50 rounded-md transition cursor-pointer"
+              className="flex items-center gap-4 py-4 transition cursor-pointer rounded-md"
+              style={{
+                borderBottom:
+                  index !== notifications.length - 1
+                    ? `1px solid ${alpha(theme.palette.divider, 0.6)}`
+                    : 'none',
+                backgroundColor: 'transparent',
+                transition: 'background-color 0.2s',
+                '&:hover': {
+                  backgroundColor: alpha(theme.palette.action.hover, 0.2)
+                }
+              }}
+              onMouseEnter={e =>
+                (e.currentTarget.style.backgroundColor = alpha(
+                  theme.palette.action.hover,
+                  0.12
+                ))
+              }
+              onMouseLeave={e =>
+                (e.currentTarget.style.backgroundColor = 'transparent')
+              }
             >
               <NotificationIcon type={type} />
               <div>
-                <p className="text-gray-800 font-medium">{message}</p>
-                <p className="text-gray-400 text-sm">{time}</p>
+                <p
+                  style={{
+                    color: theme.palette.text.primary,
+                    fontWeight: 500
+                  }}
+                >
+                  {message}
+                </p>
+                <p style={{ color: theme.palette.text.secondary, fontSize: '0.875rem' }}>
+                  {time}
+                </p>
               </div>
             </li>
           ))}
@@ -115,3 +132,5 @@ export default function Notifications() {
     </div>
   )
 }
+
+
