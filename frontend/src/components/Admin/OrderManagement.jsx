@@ -1,3 +1,4 @@
+import { useTheme, alpha } from '@mui/material/styles'
 import React, { useState } from 'react'
 import { FaTimes, FaUser, FaMoneyBillWave, FaTruck, FaHome, FaBox, FaReceipt } from 'react-icons/fa'
 
@@ -52,6 +53,7 @@ const OrderManagement = () => {
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [showDetailModal, setShowDetailModal] = useState(false)
 
+  const theme = useTheme()
   // Filter + search
   const filteredOrders = orders
     .filter(order =>
@@ -117,6 +119,11 @@ const OrderManagement = () => {
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
           className="border border-gray-300 rounded px-3 py-2"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            borderColor: alpha(theme.palette.text.primary, 0.3)
+          }}
         >
           <option value="">All statuses</option>
           {ORDER_STATUSES.map(({ value, label }) => (
@@ -127,6 +134,11 @@ const OrderManagement = () => {
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
           className="border border-gray-300 rounded px-3 py-2"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            borderColor: alpha(theme.palette.text.primary, 0.3)
+          }}
         >
           <option value="createdAt_desc">Newest</option>
           <option value="createdAt_asc">Oldest</option>

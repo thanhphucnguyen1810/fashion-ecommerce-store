@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 import { useState } from 'react'
+import { useTheme } from '@mui/material/styles'
 
 // Input Field Component
-const InputField = ({ label, name, type = 'text', value, onChange, required }) => (
+const InputField = ({ label, name, type = 'text', value, onChange, required, inputStyle }) => (
   <div className="mb-6">
     <label className="block font-semibold mb-2">{label}</label>
     <input
@@ -10,21 +11,21 @@ const InputField = ({ label, name, type = 'text', value, onChange, required }) =
       name={name}
       value={value}
       onChange={onChange}
-      className="w-full border border-gray-300 rounded-md p-2"
+      className={`w-full rounded-md border px-3 py-2 ${inputStyle}`}
       required={required}
     />
   </div>
 )
 
 // TextArea Field Component
-const TextAreaField = ({ label, name, value, onChange, required }) => (
+const TextAreaField = ({ label, name, value, onChange, required, inputStyle }) => (
   <div className="mb-6">
     <label className="block font-semibold mb-2">{label}</label>
     <textarea
       name={name}
       value={value}
       onChange={onChange}
-      className="w-full border border-gray-300 rounded-md p-2"
+      className={`w-full rounded-md border px-3 py-2 ${inputStyle}`}
       rows={4}
       required={required}
     />
@@ -32,6 +33,14 @@ const TextAreaField = ({ label, name, value, onChange, required }) => (
 )
 
 const EditProductPage = () => {
+  const theme = useTheme()
+
+  // sử dụng màu từ palette
+  const baseBg = theme.palette.background.paper
+  const textColor = theme.palette.text.primary
+  const borderColor = theme.palette.grey[300]
+  const inputStyle = `bg-transparent border-[1px] text-sm text-[${textColor}] border-[${borderColor}] placeholder-gray-500`
+
   const [productData, setProductData] = useState({
     name: '',
     description: '',
@@ -51,7 +60,6 @@ const EditProductPage = () => {
     ]
   })
 
-  // General field updater
   const updateProductField = (name, value) => {
     setProductData(prev => ({ ...prev, [name]: value }))
   }
@@ -79,11 +87,14 @@ const EditProductPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(productData)
+    // console.log(productData)
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-6 shadow-md rounded-md">
+    <div
+      className="max-w-5xl mx-auto p-6 shadow-md rounded-md"
+      style={{ backgroundColor: baseBg, color: textColor }}
+    >
       <h2 className="text-3xl font-bold mb-6">Edit Product</h2>
 
       <form onSubmit={handleSubmit}>
@@ -93,6 +104,7 @@ const EditProductPage = () => {
           value={productData.name}
           onChange={handleChange}
           required
+          inputStyle={inputStyle}
         />
 
         <TextAreaField
@@ -101,6 +113,7 @@ const EditProductPage = () => {
           value={productData.description}
           onChange={handleChange}
           required
+          inputStyle={inputStyle}
         />
 
         <InputField
@@ -109,6 +122,7 @@ const EditProductPage = () => {
           type="number"
           value={productData.price}
           onChange={handleChange}
+          inputStyle={inputStyle}
         />
 
         <InputField
@@ -117,6 +131,7 @@ const EditProductPage = () => {
           type="number"
           value={productData.countInStock}
           onChange={handleChange}
+          inputStyle={inputStyle}
         />
 
         <InputField
@@ -124,6 +139,7 @@ const EditProductPage = () => {
           name="sku"
           value={productData.sku}
           onChange={handleChange}
+          inputStyle={inputStyle}
         />
 
         <InputField
@@ -131,6 +147,7 @@ const EditProductPage = () => {
           name="sizes"
           value={productData.sizes.join(', ')}
           onChange={handleSizesChange}
+          inputStyle={inputStyle}
         />
 
         <InputField
@@ -138,6 +155,7 @@ const EditProductPage = () => {
           name="colors"
           value={productData.colors.join(', ')}
           onChange={handleColorsChange}
+          inputStyle={inputStyle}
         />
 
         {/* Image Upload Section */}
@@ -159,7 +177,11 @@ const EditProductPage = () => {
 
         <button
           type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition-colors"
+          style={{
+            backgroundColor: theme.palette.success.main,
+            color: theme.palette.success.contrastText
+          }}
+          className="w-full py-3 rounded-md transition-opacity hover:opacity-90"
         >
           Update Product
         </button>

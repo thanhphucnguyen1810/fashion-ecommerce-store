@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTheme } from '@mui/material/styles'
 
 const ProductManagement = () => {
+  const theme = useTheme()
+
   const [formData, setFormData] = useState({
     name: '',
     price: '',
@@ -30,18 +33,8 @@ const ProductManagement = () => {
   }
 
   const products = [
-    {
-      _id: 1,
-      name: 'Shift',
-      price: 110,
-      sku: '123456789'
-    },
-    {
-      _id: 2,
-      name: 'Apple',
-      price: 80,
-      sku: '987654321'
-    }
+    { _id: 1, name: 'Shift', price: 110, sku: '123456789' },
+    { _id: 2, name: 'Apple', price: 80, sku: '987654321' }
     // TODO: Product data should come from backend
   ]
 
@@ -50,7 +43,13 @@ const ProductManagement = () => {
       <h2 className="text-2xl font-bold mb-6">Product Management</h2>
 
       {/* Add New Product Form */}
-      <div className="bg-white border p-6 mb-8 rounded-lg shadow-sm">
+      <div
+        className="border p-6 mb-8 rounded-lg shadow-sm"
+        style={{
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.text.primary
+        }}
+      >
         <h3 className="text-lg font-semibold mb-4">Add New Product</h3>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -89,7 +88,11 @@ const ProductManagement = () => {
           <div className="md:col-span-3">
             <button
               type="submit"
-              className="bg-green-500 text-white px-4 py-2 mt-2 rounded hover:bg-green-600"
+              className="px-4 py-2 mt-2 rounded hover:opacity-90"
+              style={{
+                backgroundColor: theme.palette.success.main,
+                color: theme.palette.success.contrastText
+              }}
             >
               Add Product
             </button>
@@ -98,9 +101,10 @@ const ProductManagement = () => {
       </div>
 
       {/* Product Table */}
-      <div className="overflow-x-auto shadow-md sm:rounded-lg bg-white">
-        <table className="min-w-full text-left text-gray-700">
-          <thead className="bg-gray-100 text-xs uppercase">
+      <div className="overflow-x-auto shadow-md sm:rounded-lg"
+        style={{ backgroundColor: theme.palette.background.paper }}>
+        <table className="min-w-full text-left" style={{ color: theme.palette.text.primary }}>
+          <thead style={{ backgroundColor: theme.palette.grey[200] }} className="text-xs uppercase">
             <tr>
               <th className="py-3 px-4">Name</th>
               <th className="py-3 px-4">Price</th>
@@ -111,20 +115,28 @@ const ProductManagement = () => {
           <tbody>
             {products.length > 0 ? (
               products.map((product) => (
-                <tr key={product._id} className="border-b hover:bg-gray-50">
+                <tr key={product._id} className="border-b hover:opacity-80">
                   <td className="p-4 font-medium">{product.name}</td>
                   <td className="p-4">${product.price}</td>
                   <td className="p-4">{product.sku}</td>
-                  <td className="p-4">
+                  <td className="p-4 flex gap-2">
                     <Link
                       to={`/admin/products/${product._id}/edit`}
-                      className="bg-yellow-500 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-600"
+                      className="px-3 py-1 rounded"
+                      style={{
+                        backgroundColor: theme.palette.warning.main,
+                        color: theme.palette.warning.contrastText
+                      }}
                     >
                       Edit
                     </Link>
                     <button
                       onClick={() => handleDelete(product._id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      className="px-3 py-1 rounded"
+                      style={{
+                        backgroundColor: theme.palette.error.main,
+                        color: theme.palette.error.contrastText
+                      }}
                     >
                       Delete
                     </button>

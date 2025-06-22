@@ -1,7 +1,9 @@
-
 import { useState } from 'react'
+import { useTheme, alpha } from '@mui/material/styles'
 
 const UserManagement = () => {
+  const theme = useTheme()
+
   const [users, setUsers] = useState([
     {
       _id: 12345,
@@ -32,7 +34,7 @@ const UserManagement = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const newUser = {
-      _id: Date.now(), // fake ID
+      _id: Date.now(),
       name: formData.name,
       email: formData.email,
       role: formData.role
@@ -41,7 +43,6 @@ const UserManagement = () => {
     setUsers(prev => [...prev, newUser])
     setMessage('User added successfully!')
 
-    // Reset form
     setFormData({
       name: '',
       email: '',
@@ -49,7 +50,6 @@ const UserManagement = () => {
       role: 'customer'
     })
 
-    // Reset message after 3 seconds
     setTimeout(() => setMessage(''), 3000)
   }
 
@@ -72,35 +72,41 @@ const UserManagement = () => {
     }
   }
 
-  // Filtering
   const filteredUsers = users.filter(user =>
     (user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase())) &&
     (roleFilter === '' || user.role === roleFilter)
   )
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage)
   const currentUsers = filteredUsers.slice(
     (currentPage - 1) * usersPerPage,
     currentPage * usersPerPage
   )
 
-  const inputClass = 'w-full p-2 border rounded'
-  const labelClass = 'block text-gray-700 mb-1'
+  const inputClass = `w-full p-2 border rounded bg-transparent text-[${theme.palette.text.primary}] border-[${alpha(theme.palette.text.primary, 0.3)}]`
+  const labelClass = 'block mb-1'
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div
+      className="max-w-7xl mx-auto p-6"
+      style={{ color: theme.palette.text.primary }}
+    >
       <h2 className="text-2xl font-bold mb-6">User Management</h2>
 
-      {/* Status message */}
       {message && (
-        <div className="mb-4 p-2 bg-green-100 text-green-700 border border-green-400 rounded">
+        <div
+          className="mb-4 p-2 border rounded"
+          style={{
+            backgroundColor: alpha(theme.palette.success.main, 0.1),
+            color: theme.palette.success.main,
+            borderColor: alpha(theme.palette.success.main, 0.4)
+          }}
+        >
           {message}
         </div>
       )}
 
-      {/* Search & Filter */}
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <input
           type="text"
@@ -108,12 +114,22 @@ const UserManagement = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="p-2 border rounded w-full md:w-1/2"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            borderColor: alpha(theme.palette.text.primary, 0.3)
+          }}
         />
 
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
           className="p-2 border rounded w-full md:w-1/3"
+          style={{
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            borderColor: alpha(theme.palette.text.primary, 0.3)
+          }}
         >
           <option value="">All Roles</option>
           <option value="admin">Admin</option>
@@ -121,8 +137,10 @@ const UserManagement = () => {
         </select>
       </div>
 
-      {/* Add New User Form */}
-      <section className="p-6 rounded-lg border mb-8 bg-white">
+      <section
+        className="p-6 rounded-lg border mb-8"
+        style={{ backgroundColor: theme.palette.background.paper }}
+      >
         <h3 className="text-lg font-semibold mb-4">Add New User</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -168,6 +186,11 @@ const UserManagement = () => {
               value={formData.role}
               onChange={handleChange}
               className={inputClass}
+              style={{
+                backgroundColor: theme.palette.background.paper,
+                color: theme.palette.text.primary,
+                borderColor: alpha(theme.palette.text.primary, 0.3)
+              }}
             >
               <option value="customer">Customer</option>
               <option value="admin">Admin</option>
@@ -176,17 +199,26 @@ const UserManagement = () => {
 
           <button
             type="submit"
-            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+            className="py-2 px-4 rounded hover:opacity-90"
+            style={{
+              backgroundColor: theme.palette.success.main,
+              color: theme.palette.success.contrastText
+            }}
           >
             Add User
           </button>
         </form>
       </section>
 
-      {/* User List Table */}
       <section className="overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="min-w-full text-left text-gray-700 bg-white">
-          <thead className="bg-gray-100 text-xs uppercase">
+        <table
+          className="min-w-full text-left"
+          style={{ color: theme.palette.text.primary, backgroundColor: theme.palette.background.paper }}
+        >
+          <thead
+            className="text-xs uppercase"
+            style={{ backgroundColor: alpha(theme.palette.grey[500], 0.2) }}
+          >
             <tr>
               <th className="py-3 px-4">Name</th>
               <th className="py-3 px-4">Email</th>
@@ -196,14 +228,23 @@ const UserManagement = () => {
           </thead>
           <tbody>
             {currentUsers.map((user) => (
-              <tr key={user._id} className="border-b hover:bg-gray-50">
-                <td className="p-4 font-medium text-gray-900 whitespace-nowrap">{user.name}</td>
+              <tr
+                key={user._id}
+                className="border-b"
+                style={{ borderBottomColor: alpha(theme.palette.divider, 0.2) }}
+              >
+                <td className="p-4 font-medium whitespace-nowrap">{user.name}</td>
                 <td className="p-4">{user.email}</td>
                 <td className="p-4">
                   <select
                     value={user.role}
                     onChange={(e) => handleRoleChange(user._id, e.target.value)}
                     className={inputClass}
+                    style={{
+                      backgroundColor: theme.palette.background.paper,
+                      color: theme.palette.text.primary,
+                      borderColor: alpha(theme.palette.text.primary, 0.3)
+                    }}
                   >
                     <option value="customer">Customer</option>
                     <option value="admin">Admin</option>
@@ -212,7 +253,11 @@ const UserManagement = () => {
                 <td className="p-4">
                   <button
                     onClick={() => handleDeleteUser(user._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    className="px-4 py-2 rounded hover:opacity-90"
+                    style={{
+                      backgroundColor: theme.palette.error.main,
+                      color: theme.palette.error.contrastText
+                    }}
                   >
                     Delete
                   </button>
@@ -223,12 +268,12 @@ const UserManagement = () => {
         </table>
       </section>
 
-      {/* Pagination */}
       <div className="mt-4 flex items-center justify-between">
         <button
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(prev => prev - 1)}
-          className="px-3 py-1 border rounded bg-gray-100 disabled:opacity-50"
+          className="px-3 py-1 border rounded disabled:opacity-50"
+          style={{ backgroundColor: theme.palette.action.hover }}
         >
           Prev
         </button>
@@ -238,7 +283,8 @@ const UserManagement = () => {
         <button
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(prev => prev + 1)}
-          className="px-3 py-1 border rounded bg-gray-100 disabled:opacity-50"
+          className="px-3 py-1 border rounded disabled:opacity-50"
+          style={{ backgroundColor: theme.palette.action.hover }}
         >
           Next
         </button>
