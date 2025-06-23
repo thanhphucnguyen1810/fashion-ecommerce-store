@@ -11,6 +11,8 @@ import mongoSanitize from 'express-mongo-sanitize'
 import { corsOptions } from './config/cors'
 import { errorHandlingMiddleware } from '~/middlewares/errorHandling.middleware'
 
+import userRoutes from './routes/user.routes'
+
 // Load environment variables
 dotenv.config()
 
@@ -47,11 +49,14 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, Please try again in an hour'
 })
 
-app.use('/zenya', limiter)
+app.use('/e-commerce', limiter)
 
 // Routes
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.use('/api/users', userRoutes)
+
 
 export default app
