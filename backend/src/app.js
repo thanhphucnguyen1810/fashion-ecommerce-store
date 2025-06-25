@@ -12,6 +12,7 @@ import { corsOptions } from './config/cors'
 import { errorHandlingMiddleware } from '~/middlewares/errorHandling.middleware'
 
 import userRoutes from './routes/user.routes'
+import productRoutes from './routes/product.routes'
 
 // Load environment variables
 dotenv.config()
@@ -57,6 +58,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/users', userRoutes)
+app.use('/api/products', productRoutes)
 
 
 export default app
