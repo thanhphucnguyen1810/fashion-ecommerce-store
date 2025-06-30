@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import User from '~/models/User.model'
+import User from '~/models/user.model'
 import { env } from '~/config/environment'
 
 // Middleware to protect routes
