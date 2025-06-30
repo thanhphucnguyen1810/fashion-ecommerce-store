@@ -1,6 +1,6 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import User from '~/models/User.model'
+import User from '~/models/user.model'
 import { env } from '~/config/environment'
 import { protect } from '~/middlewares/auth.middleware'
 const router = express.Router()
