@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import Product from '~/models/product.model'
 import User from '~/models/user.model'
+import Cart from '~/models/cart.model'
 import products from '~/data/products.data'
 import { CONNECT_DB } from './config/mongodb'
 
@@ -14,6 +15,7 @@ const seedData = async () => {
     // Clear existing data
     await Product.deleteMany()
     await User.deleteMany()
+    await Cart.deleteMany()
 
     // Create a default admin User
     const createUser = await User.create({
